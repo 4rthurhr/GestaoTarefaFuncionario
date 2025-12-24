@@ -7,6 +7,7 @@ import Models.FuncionarioModel;
 
 @Repository
 public interface FuncionarioRepository extends JpaRepository<FuncionarioModel, Long> {
+
 	
 	
 

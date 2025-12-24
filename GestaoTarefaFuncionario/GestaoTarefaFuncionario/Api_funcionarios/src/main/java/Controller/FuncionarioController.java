@@ -2,6 +2,9 @@ package Controller;
 
 import java.util.List;
 
+import Dto.Funcionarios.FuncinarioRespoDto;
+import Dto.Funcionarios.FuncionarioCreateDto;
+import Dto.Funcionarios.FuncionarioListDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,16 +26,19 @@ public class FuncionarioController {
 	public List<FuncionarioModel> ListarTodos(){
 		return service.ListFuncionario();
 	}
+
+    @GetMapping("/nomes")
+    public List<FuncionarioListDto> listar(){
+        return service.listar();
+    }
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<FuncionarioModel> BuscarPorId(Long id){
-		return service.BuscaporId(id).map(ResponseEntity :: ok).orElse(ResponseEntity.notFound().build());
-	}
+
 	
 	@PostMapping
-	public FuncionarioModel criar(@RequestBody FuncionarioModel funcionario) {
-		return service.salvar(funcionario);
-	}
+	public FuncinarioRespoDto criar(@RequestBody FuncionarioCreateDto dto){
+        FuncionarioModel funcionario = service.criar(dto);
+        return new FuncinarioRespoDto(funcionario);
+    }
 	
 	
 	@DeleteMapping("/{id}")
